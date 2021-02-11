@@ -156,3 +156,9 @@ Es una encapsulación de una abstracción de un ambiente de desarrollo de aplica
 ### Software as a Service (SaaS)
 
 Es la capa más alta y se caracteriza como una aplicación completa ofrecida como un servicio bajo demanda a través de internet. Esto evita la necesidad de instalar la aplicación en nuestra computadora, evitando asumir los costos de soporte y el mantenimiento de hardware y software.
+
+# Referencias
+
+- https://iximiuz.com/en/posts/not-every-container-has-an-operating-system-inside/
+- Docker, Introducing Docker Essentials, Containers, and more. Udemy
+- Docker and Kubernetes - The Complete Guide. Udemy
