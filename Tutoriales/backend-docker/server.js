@@ -1,4 +1,7 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const env = require('dotenv').config();
+
 const app = new express();
 const fs = require('fs');
 
@@ -16,6 +19,9 @@ const htmlPlaceholder = `<html>
 </html>
 `;
 
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const TimeStamp = mongoose.model('Timestamp', { timestamp: String });
 const getTimestamp = () => (fs.readFileSync('/elements/procs/timestamps', 'utf8')).toString();
 
 app.get('/', (req, res) => {
@@ -31,12 +37,28 @@ app.get('/timestamp', (req, res) => {
     res.send(getTimestamp());
 });
 
-app.get('/saveTimestamp', (req, res) => {
+app.get('/saveTimestamp', async (req, res) => {
     const timestamp = getTimestamp();
 
-    /* 
-    logica para guardar datos
-    */
+    const newTimestamp = new TimeStamp({ timestamp });
+    try {
+        await newTimestamp.save();
+        res.send('Timestamp agregado correctamente: ' + timestamp);
+    }
+    catch (error) {
+        res.send(error.message).statusCode(500);
+    }
 });
 
-app.listen(process.env.port || 80);
+app.get('/getAll', async (req, res) => {
+    try {
+        const all = await TimeStamp.find({});
+        res.send(all);
+    }
+    catch (error) {
+        res.send(error.message).statusCode(500);
+    }
+});
+
+const PORT = process.env.port || 80
+app.listen(PORT, () => { console.log(`API lista en -> http://localhost:${PORT}`) });
