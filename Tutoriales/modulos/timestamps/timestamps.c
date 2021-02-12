@@ -54,8 +54,6 @@ static int my_proc_show(struct seq_file *m, void *v)
 
     */
 
-    seq_printf(m, "%ld ->", current_time);
-
     int seconds = current_time % 60;   // Obtener segundos en la hora actual
     int minutes = (seconds / 60) % 60; // Obtener minutos en la hora actual
     int hours = (minutes / 60) % 24;   // Obtener horas en tiempo actual
@@ -86,7 +84,7 @@ static struct file_operations my_fops = {
 static int __init test_init(void)
 {
     struct proc_dir_entry *entry;
-    entry = proc_create("timestamps-module", 0777, NULL, &my_fops);
+    entry = proc_create("timestamps", 0777, NULL, &my_fops);
     if (!entry)
     {
         return -1;
@@ -100,7 +98,7 @@ static int __init test_init(void)
 
 static void __exit test_exit(void)
 {
-    remove_proc_entry("timestamps-module", NULL);
+    remove_proc_entry("timestamps", NULL);
     printk(KERN_INFO "@timestamps-module finalizado\n");
 }
 
