@@ -1,4 +1,68 @@
-# Pasos a seguir
+# Módulos
+
+## ¿Qué es un módulo kernel?
+
+Un módulo kernel es código binario, pueden ser cargados y eliminados del kernel según las necesidades. El objetivo es extender las funcionalidades del kernel y que estas funcionalidades puedan ser cargadas y eliminadas del núcleo bajo demanda. Estas extienden las funcionalidades del núcleo sin la necesidad de reiniciar el sistema.
+
+El kernel tiene diseño **modular**, cuando se instala un nuevo componente o se inicia la computadora, los módulos son cargados de forma dinámica para que funcionen de forma transparente.
+
+## ¿Dónde están y cómo los veo?
+
+Los módulos son almacenados en un directorio especial
+
+```bash
+# Ver módulos almacenados
+$ /lib/modules/[nombre_kernel]
+
+# Ver la versión del kernel
+$ uname -r
+
+# Revisar módulos instalados, esto listará todos los módulos instalados en el kernel
+$ lsmod
+
+# Revisamos o "buscamos" unicamente un módulo
+$ lsmod | grep "[nombre_modulo]"
+
+```
+
+## ¿Qué contiene un módulo?
+
+En su forma más básica, un módulo contiene el siguiente código:
+
+```c
+// Librerías a cargar
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+
+MODULE_LICENSE("MODULO");
+MODULE_AUTHOR("AUTOR");
+MODULE_DESCRIPTION("DESCRIPCION");
+MODULE_VERSION("VERSION");
+
+// Definicion de evento principal
+static int __init event_init (void) {
+
+    // Codigo dentro del evento
+
+    // Retornar 0 si todo está bien
+    // Retornar [num] como código de error
+    return 0;
+}
+
+static void __exit event_exit(void) {
+
+    // Código dentro del evento
+}
+
+// esta llamada carga la función que se ejecutará en el init
+module_init(event_init);
+
+// esta llamada carga la función que se ejecutará en el exit
+module_exit(event_exit);
+```
+
+## Pasos a seguir para montar un módulo
 
 ```bash
 # Instalar linux headers
@@ -9,14 +73,6 @@ $ sudo apt-get install build-essential
 ```
 
 Para ver el directorio actual, y la versión del kernel, podemos usar los siguientes comandos.
-
-```bash
-# Ver directorio actual
-$ pwd
-
-# Ver version del kernel
-$ uname -r
-```
 
 Ya después que tenemos un módulo escrito, en el archivo [nombre_modulo].c:
 
@@ -60,18 +116,23 @@ Ahora, revisamos que el módulo esté instalado correctamente. Para ver el lista
 # Revisar los logs de los modulos
 $ sudo dmesg
 
-# Revisar módulos instalados, esto listará todos los módulos instalados en el kernel
-$ lsmod
-
-# Revisamos o "buscamos" unicamente un módulo
-$ lsmod | grep "[nombre_modulo]"
-
 # Ahora, revisamos el documento generado, cada vez que lo revisemos se reescribirá
 $ cat /proc/[nombre_modulo]
 
 ```
 
-El resultado de esto sera escrito en la pantalla
+**El resultado de este último comando sera escrito en la pantalla.**
+
+Para eliminar el módulo (para volver a cargarlo o simplemente eliminarlo).
+
+```bash
+
+# Eliminar el modulo
+# No se espera ninguna salida cuando este comando es exitoso.
+
+$ sudo rmmod "[nombre_modulo]"
+
+```
 
 # REFERENCIAS Y LECTURAS POSTERIORES
 
