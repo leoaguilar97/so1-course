@@ -53,10 +53,16 @@ static int my_proc_show(struct seq_file *m, void *v)
     https://www.kernel.org/doc/Documentation/printk-formats.txt
 
     */
+    int seconds, minutes, hours;
+    int temporal1, temporal2;
 
-    int seconds = current_time % 60;   // Obtener segundos en la hora actual
-    int minutes = (seconds / 60) % 60; // Obtener minutos en la hora actual
-    int hours = (minutes / 60) % 24;   // Obtener horas en tiempo actual
+    seconds = current_time % 60; // Obtener segundos en la hora actual
+    temporal1 = seconds / 60;
+
+    minutes = temporal1 % 60; // Obtener minutos en la hora actual
+
+    temporal2 = temporal1 / 60;
+    hours = temporal2 % 24; // Obtener horas en tiempo actual
 
     seq_printf(m, "%d:%d:%d", hours, minutes, seconds);
 
