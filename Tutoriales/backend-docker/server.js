@@ -11,33 +11,35 @@ const htmlPlaceholder = `<html>
 </head>
 <body>
 <div>
- <h1>SO1</h1>
- <h3>La hora del server es: </h3>
- <h5 style="color: blue">$_timestamp_$</h5>
+$_body_$
 </div>
 </body>
 </html>
+`;
+
+const htmlGetOne = `
+ <h1>Hora del server</h1>
+ <h2 style="color: blue">$_timestamp_$</h2>
+`;
+
+const htmlGetAll = `
+<h1>Horas guardadas en MongoDB</h1>
+<ol>
+$_items_$
+</ol>
 `;
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const TimeStamp = mongoose.model('Timestamp', { timestamp: String });
 const getTimestamp = () => (fs.readFileSync('/elements/procs/timestamps', 'utf8')).toString();
+const getHtml = (innerBody) => htmlPlaceholder.replace('$_body_$', innerBody);
 
-app.get('/', (req, res) => {
-    const html = htmlPlaceholder.replace('$_timestamp_$', getTimestamp());
-    res.send(html);
-});
-
-app.get('/test', (req, res) => {
-    res.send("SO1 - Laboratorio");
-});
-
-app.get('/timestamp', (req, res) => {
+app.get('/one', (req, res) => {
     res.send(getTimestamp());
 });
 
-app.get('/saveTimestamp', async (req, res) => {
+app.get('/save', async (req, res) => {
     const timestamp = getTimestamp();
 
     const newTimestamp = new TimeStamp({ timestamp });
@@ -50,14 +52,23 @@ app.get('/saveTimestamp', async (req, res) => {
     }
 });
 
-app.get('/getAll', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const all = await TimeStamp.find({});
-        res.send(all);
+
+        const list_items = all.reduce((prev, curr) => `${prev}<li style='font-size: 18px'>Timestamp: <strong style='color: green; font-weight: bold'>${curr.timestamp}</strong></li>`, "");
+        const innerBody = htmlGetAll.replace('$_items_$', list_items);
+
+        res.send(getHtml(innerBody));
     }
     catch (error) {
         res.send(error.message).statusCode(500);
     }
+});
+
+app.get('/current', (req, res) => {
+    const innerBody = htmlGetOne.replace('$_timestamp_$', getTimestamp());
+    res.send(getHtml(innerBody));
 });
 
 const PORT = process.env.port || 80
