@@ -83,6 +83,20 @@ Este archivo lo utilizaremos para compilar todo el código que escribimos en el 
 
 Ahora que ya tenemos todo lo necesario para subir nuestro módulo, debemos de agregarle el código que queremos que realice.
 
+## Dependencias
+
+Se necesitan algunas dependencias que no están incluídas en general en las distribuciones de linux.
+
+Para el caso de Ubuntu y debian, se pueden obtener de esta manera:
+
+```bash
+# Descargar headers del módulo específico que tenemos
+$ sudo apt-get install linux-headers-$(uname -r)
+
+# Descargar build essentials, para compilar el código c
+$ sudo apt-get install build-essential
+```
+
 ## Pasos a seguir para montar un módulo
 
 ```bash
