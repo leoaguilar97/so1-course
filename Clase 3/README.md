@@ -30,6 +30,10 @@ $ lsmod | grep "[nombre_modulo]"
 En su forma más básica, un módulo contiene el siguiente código:
 
 ```c
+/*
+Archivo: [nombre_modulo].c
+*/
+
 // Librerías a cargar
 #include <linux/init.h>
 #include <linux/module.h>
@@ -43,7 +47,7 @@ MODULE_VERSION("VERSION");
 // Definicion de evento principal
 static int __init event_init (void) {
 
-    // Codigo dentro del evento
+    // Codigo dentro del evento INIT
 
     // Retornar 0 si todo está bien
     // Retornar [num] como código de error
@@ -52,7 +56,7 @@ static int __init event_init (void) {
 
 static void __exit event_exit(void) {
 
-    // Código dentro del evento
+    // Código dentro del evento EXIT
 }
 
 // esta llamada carga la función que se ejecutará en el init
@@ -61,6 +65,23 @@ module_init(event_init);
 // esta llamada carga la función que se ejecutará en el exit
 module_exit(event_exit);
 ```
+
+Aparte, necesitaremos de un archivo especial llamado Makefile; este contendrá el siguiente contenido:
+
+```Makefile
+# Archivo: Makefile
+obj-m += timestamps.o # Definir el nombre del archivo que esperamos de salida
+all:
+    # Definir que se hará cuando se compile
+	make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd)
+modulesclean:
+    # Definir que se hará cuando se limpie el módulo
+	make -C /lib/modules/$(shell uname -r)/build M=$(shell pwd) clean
+```
+
+Este archivo lo utilizaremos para compilar todo el código que escribimos en el módulo.
+
+Ahora que ya tenemos todo lo necesario para subir nuestro módulo, debemos de agregarle el código que queremos que realice.
 
 ## Pasos a seguir para montar un módulo
 
@@ -141,7 +162,3 @@ $ sudo rmmod "[nombre_modulo]"
 - https://gist.github.com/NahianAhmed/074d378f0142132c5397fa0a0aa2b7a3
 - https://blog.sourcerer.io/writing-a-simple-linux-kernel-module-d9dc3762c234
 - https://www.thegeekstuff.com/2013/07/write-linux-kernel-module/
-
-```
-
-```
