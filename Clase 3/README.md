@@ -1,3 +1,14 @@
+#
+
+```bash
+# Instalar linux headers
+$ sudo apt-get install linux-headers-$(uname -r)
+
+# Instalar dependencias para compilar c y c++
+$ sudo apt-get install build-essential
+
+```
+
 # REFERENCIAS Y LECTURAS POSTERIORES
 
 - https://www.quora.com/What-is-the-difference-between-printk-and-seq_printf-Kernel-API

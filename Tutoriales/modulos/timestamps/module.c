@@ -60,7 +60,7 @@ static int my_proc_show(struct seq_file *m, void *v)
     int minutes = (seconds / 60) % 60; // Obtener minutos en la hora actual
     int hours = (minutes / 60) % 24;   // Obtener horas en tiempo actual
 
-    seq_printf(m, "%d:%d:%d", hr, min, sec);
+    seq_printf(m, "%d:%d:%d", hours, minutes, seconds);
 
     return 0;
 }
