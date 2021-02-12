@@ -297,6 +297,15 @@ $ curl localhost:80/
 
 # REFERENCIAS Y LECTURAS POSTERIORES
 
+## Docker
+
+- https://docs.docker.com/engine/reference/builder/
+- https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+- https://linuxize.com/post/docker-run-command/
+- https://docs.docker.com/engine/reference/run/
+
+## Modulos
+
 - https://www.quora.com/What-is-the-difference-between-printk-and-seq_printf-Kernel-API
 - https://elixir.bootlin.com/linux/latest/ident/seq_printf
 - https://gist.github.com/NahianAhmed/074d378f0142132c5397fa0a0aa2b7a3
