@@ -15,8 +15,8 @@ RUN npm install
 # Copiar todos los archivos al workdir
 COPY . .
 
-# Exponer el puerto 4000 al mundo
-EXPOSE 4000
+# Exponer el puerto 80 al mundo
+EXPOSE 80
 
 # Copiar el volumen de datos de proc a /elements/procs
 RUN mkdir -p /elements/procs

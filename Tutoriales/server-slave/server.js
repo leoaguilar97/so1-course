@@ -1,3 +1,7 @@
+// Requerir DOTENV que carga la configuracion que tenemos en el archivo .env en el directorio principal
+// Aca se pueden definir todas las variables de entorno
+require('dotenv').config(); //npm i dotenv
+
 // Modulos instalados 
 const express = require('express'); // npm i express
 const axios = require('axios'); // npm i axios
@@ -8,7 +12,7 @@ const { getTimestamp } = require('./kernel'); // Modulo que controla los kernels
 
 // EMPEZAMOS LA API
 
-const OTHER_API_URL = 'http://localhost:4001/';
+const OTHER_API_URL = process.env.API_URL; // Leer la URL de la api del archivo .env
 
 const app = new express(); // Crear una base de datos express
 
