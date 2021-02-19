@@ -1,6 +1,6 @@
 // Requerir DOTENV que carga la configuracion que tenemos en el archivo .env en el directorio principal
 // Aca se pueden definir todas las variables de entorno
-require('dotenv').config();
+require('dotenv').config();  //npm i dotenv
 
 // Estos modulos los instalamos por aparte
 const express = require('express'); // npm i express
