@@ -38,8 +38,9 @@ app.get('/', async (req, res) => { // es importante notar que este es un metodo 
     console.log("Server1: Peticion de lista de timestamps");
     // Intentamos realizar el get al otro servidor
     try {
-        const { data } = await axios.get(OTHER_API_URL); // realizamos una peticion GET a la otra API
+        const result = await axios.get(OTHER_API_URL); // realizamos una peticion GET a la otra API
         console.log("Server1: La peticion al server 2 fue exitosa");
+        const data = result.data;
 
         const html = getHtmlList(data); // Obtenemos la lista con un formato de lista de HTML
 
