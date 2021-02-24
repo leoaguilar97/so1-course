@@ -265,7 +265,7 @@ Después, iniciamos a escribir nuestros módulos. El primer archivo que necesita
 ```javascript
 // Este modulo lo instalamos por aparte
 // Este nos sirve para conectarnos a MongoDB, es como un driver pero con muchas mas utilidades
-const mongoose = require('mongoose'); // npm i mongoose
+const mongoose = require("mongoose"); // npm i mongoose
 
 // Recordar que este dato viene del archivo .env en el directorio donde se encuentra este archivo
 const MONGO_URL = process.env.MONGO_URL; // Leer el URL de MongoDB desde el ambiente
@@ -273,72 +273,75 @@ const MONGO_CONFIG = { useNewUrlParser: true, useUnifiedTopology: true }; // Con
 
 // Realizar la conexion al URL con mongoose
 mongoose
-.connect(MONGO_URL, MONGO_CONFIG)
-.then(() => {
-// Esta funcion se ejecutara cuando la conexion haya sido exitosa
-console.log("Server2: La base de datos fue correctamente conectada.");
-})
-.catch((error) => {
-// Esta funcion se ejecutara solamente cuando haya un error de conexion
-console.log("Server2: Error de conexion en la base de datos");
+  .connect(MONGO_URL, MONGO_CONFIG)
+  .then(() => {
+    // Esta funcion se ejecutara cuando la conexion haya sido exitosa
+    console.log("Server2: La base de datos fue correctamente conectada.");
+  })
+  .catch((error) => {
+    // Esta funcion se ejecutara solamente cuando haya un error de conexion
+    console.log("Server2: Error de conexion en la base de datos");
 
-        // Salir del programa, ya que no nos sirve tener la API funcionando si esta mal la conexion
-        process.exit(1);
-    });
+    // Salir del programa, ya que no nos sirve tener la API funcionando si esta mal la conexion
+    process.exit(1);
+  });
 
 // Realizar el modelo con el que se guardaran en la base de datos los datos.
-const TimeStamp = mongoose.model( // Timestamp es el modelo que se utilizara
-'Timestamp', // Este es el nombre del modelo, saldra en donde visualicemos MongoDB
-// Los datos que se guardaran en la base de datos
-{
-timestamp: String //Este es el timestamp que queremos guardar
-//Aca vienen todos los demas campos que querramos guardar
-}
+const TimeStamp = mongoose.model(
+  // Timestamp es el modelo que se utilizara
+  "Timestamp", // Este es el nombre del modelo, saldra en donde visualicemos MongoDB
+  // Los datos que se guardaran en la base de datos
+  {
+    timestamp: String, //Este es el timestamp que queremos guardar
+    //Aca vienen todos los demas campos que querramos guardar
+  }
 );
 
 // Crear datos en la base de datos
 // Notar que la funcion es async porque adentro de ella usamos await
-const create = async (timestamp) => { // El timestamp es el valor que vamos a guardar en la base de datos.
+const create = async (timestamp) => {
+  // El timestamp es el valor que vamos a guardar en la base de datos.
 
-    const newTimestamp = new TimeStamp({ timestamp }); // Crear una nueva instancia del modelo, con el dato guardado.
+  const newTimestamp = new TimeStamp({ timestamp }); // Crear una nueva instancia del modelo, con el dato guardado.
 
-    // Tratar de guardar en la base de datos
-    try {
-        console.log("Server2: Crear un nuevo timestamp");
-        await newTimestamp.save(); // Guardar en la base de datos el tiempo que acabamos de crear
+  // Tratar de guardar en la base de datos
+  try {
+    console.log("Server2: Crear un nuevo timestamp");
+    await newTimestamp.save(); // Guardar en la base de datos el tiempo que acabamos de crear
 
-        console.log("Server2: Timestamp guardado correctamente");
-        return { msg: 'Ok', data: newTimestamp.toJSON(), code: 201 }; // Retornar un objeto con los datos que acabamos de crear
-    }
+    console.log("Server2: Timestamp guardado correctamente");
+    return { msg: "Ok", data: newTimestamp.toJSON(), code: 201 }; // Retornar un objeto con los datos que acabamos de crear
+  } catch ({ message }) {
     // Si existio un error en el guardado de los datos, mandar un error
-    catch ({ message }) {
-        console.log(`Server2: Error producido guardando informacion en MongoDB, error ${message}`);
-        return { msg: message, data: null, code: 500 }; // Retornar un objeto con un mensaje de error
-    }
-
+    console.log(
+      `Server2: Error producido guardando informacion en MongoDB, error ${message}`
+    );
+    return { msg: message, data: null, code: 500 }; // Retornar un objeto con un mensaje de error
+  }
 };
 
 // Obtener todos los datos de la base de datos
 // Notar que la funcion es async porque adentro de ella usamos await
 const getAll = async () => {
-// Tratar de opbtener todos los registros en la base de datos
-try {
-console.log("Server2: Obtener todos los timestamps");
-const all_data = await TimeStamp.find({}); // Obtener todos los datos de la base de datos, por ello pasamos el objeto "{}" para que no tenga ningun filtro
+  // Tratar de opbtener todos los registros en la base de datos
+  try {
+    console.log("Server2: Obtener todos los timestamps");
+    const all_data = await TimeStamp.find({}); // Obtener todos los datos de la base de datos, por ello pasamos el objeto "{}" para que no tenga ningun filtro
 
-        console.log("Server2: Datos obtenidos correctamente");
-        return { data: all_data, code: 201 }; // Retornar un objeto con los datos que acabamos de obtener, en forma de array
-    }
+    console.log("Server2: Datos obtenidos correctamente");
+    return { data: all_data, code: 201 }; // Retornar un objeto con los datos que acabamos de obtener, en forma de array
+  } catch ({ message }) {
     // Si existio un error en la obtencion de datos, mandar un error
-    catch ({ message }) {
-        console.log(`Server2: Error producido guardando informacion en MongoDB, error ${message}`);
-        return { data: [], code: 500 }; // Retornar un array vacio
-    }
-
+    console.log(
+      `Server2: Error producido guardando informacion en MongoDB, error ${message}`
+    );
+    return { data: [], code: 500 }; // Retornar un array vacio
+  }
 };
 
 // Exportar las funciones que acabamos de realizar
 module.exports = { create, getAll };
+```
 
 En este modulo realizamos todas las conexiones y configuraciones necesarias para que funcione nuestra base de datos MongoDB, nos conectamos a la BD y exportamos dos funciones, una para escribir y otra para leer todos los documentos.
 
@@ -346,6 +349,7 @@ Ahora que ya tenemos configurado esto, podemos iniciar a programar nuestra API.
 
 El codigo de la API del server master es muy parecida a la API del server slave, unicamente cambia en la forma en la que se llaman a las otras funciones y ademas el tipo de retorno que se espera. Ademas, aca no tenemos necesidad de leer el modulo. Escribimos la api en el archivo server.js ![server.js](../Tutoriales/server-master/server.js)
 
+```Javascript
 // Requerir DOTENV que carga la configuracion que tenemos en el archivo .env en el directorio principal
 // Aca se pueden definir todas las variables de entorno
 require('dotenv').config(); //npm i dotenv
