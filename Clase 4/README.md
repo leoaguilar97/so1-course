@@ -599,56 +599,53 @@ $ docker network inspect networkapi
 
 Y tendremos que obtener una salida asi:
 
-````json
-[{
-   "Name":"networkapi",
-   "Id":"432c46140bf2de758da2ca466c2ca7182ad3c8c3d307bf20abec23842cfd65d6",
-   "Created":"2021-02-24T03:58:16.6466156Z",
-   "Scope":"local",
-   "Driver":"bridge",
-   "EnableIPv6":false,
-   "IPAM":{
-      "Driver":"default",
-      "Options":{
-
-      },
-      "Config":[
-         {
-            "Subnet":"172.18.0.0/16",
-            "Gateway":"172.18.0.1"
-         }
+```json
+[
+  {
+    "Name": "networkapi",
+    "Id": "432c46140bf2de758da2ca466c2ca7182ad3c8c3d307bf20abec23842cfd65d6",
+    "Created": "2021-02-24T03:58:16.6466156Z",
+    "Scope": "local",
+    "Driver": "bridge",
+    "EnableIPv6": false,
+    "IPAM": {
+      "Driver": "default",
+      "Options": {},
+      "Config": [
+        {
+          "Subnet": "172.18.0.0/16",
+          "Gateway": "172.18.0.1"
+        }
       ]
-   },
-   "Internal":false,
-   "Attachable":false,
-   "Ingress":false,
-   "ConfigFrom":{
-      "Network":""
-   },
-   "ConfigOnly":false,
-   "Containers":{
-      "637aa2b2ce877209fa2ccbd66fc5bec3864f2676adf09749cfdceaba145d7849":{
-         "Name":"master",
-         "EndpointID":"fb00fb61213bf713e9814106acffc3929d2cbe3d1bf0eb0cf13d45302b8834f1",
-         "MacAddress":"02:42:ac:12:00:03",
-         "IPv4Address":"172.18.0.3/16",
-         "IPv6Address":""
+    },
+    "Internal": false,
+    "Attachable": false,
+    "Ingress": false,
+    "ConfigFrom": {
+      "Network": ""
+    },
+    "ConfigOnly": false,
+    "Containers": {
+      "637aa2b2ce877209fa2ccbd66fc5bec3864f2676adf09749cfdceaba145d7849": {
+        "Name": "master",
+        "EndpointID": "fb00fb61213bf713e9814106acffc3929d2cbe3d1bf0eb0cf13d45302b8834f1",
+        "MacAddress": "02:42:ac:12:00:03",
+        "IPv4Address": "172.18.0.3/16",
+        "IPv6Address": ""
       },
-      "6d9c90bbb1763cade9b98b8f5185abcdad3d678b5f6608bd4c790efe5e426f87":{
-         "Name":"slave",
-         "EndpointID":"7a6dcfb0e6a29df9732bd8fab653f47d141cd4cf4c6e3073e7cd153e67330ea5",
-         "MacAddress":"02:42:ac:12:00:02",
-         "IPv4Address":"172.18.0.2/16",
-         "IPv6Address":""
+      "6d9c90bbb1763cade9b98b8f5185abcdad3d678b5f6608bd4c790efe5e426f87": {
+        "Name": "slave",
+        "EndpointID": "7a6dcfb0e6a29df9732bd8fab653f47d141cd4cf4c6e3073e7cd153e67330ea5",
+        "MacAddress": "02:42:ac:12:00:02",
+        "IPv4Address": "172.18.0.2/16",
+        "IPv6Address": ""
       }
-   },
-   "Options":{
-
-   },
-   "Labels":{
-
-   }
-}]```
+    },
+    "Options": {},
+    "Labels": {}
+  }
+]
+```
 
 Ahora si, nuestro controlador de peticiones de docker mapeara http://master:4001 al URl http://172.18.0.3:4001, y este URL es totalmente accesible desde el contenedor slave.
 
@@ -662,7 +659,7 @@ Realizamos una peticion POST a localhost, desde el Host donde estamos trabajando
 
 ```bash
 $ curl -X POST http://localhost/
-````
+```
 
 Esto nos creara un nuevo record en labase de datos, conectandose primero a la API slave.
 
