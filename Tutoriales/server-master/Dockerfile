@@ -15,11 +15,8 @@ RUN npm install
 # Copiar todos los archivos al workdir
 COPY . .
 
-# Exponer el puerto 80 al mundo
-EXPOSE 80
-
-# 
-RUN mkdir -p /elements/procs
+# Exponer el puerto 4001 al mundo
+EXPOSE 4001
 
 # Correr NodeJS
 CMD [ "node", "server.js" ]

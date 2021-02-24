@@ -1,0 +1,19 @@
+{
+  "name": "server-slave",
+  "version": "1.0.0",
+  "description": "Este server slave es util para demostrar la comunicacion entre contenedores de Docker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15"
+  },
+  "comentario": "Proxy es utilizado para que todas las peticiones HTTP que hagamos salgan a esta ruta, en vez de escribirla una por una",
+  "proxy": "http://localhost:4001"
+}

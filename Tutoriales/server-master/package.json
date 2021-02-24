@@ -1,9 +1,10 @@
 {
-  "name": "backend-docker",
+  "name": "server-master",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server utilizado para demostrar como conectar contenedores con Docker",
   "main": "server.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "author": "",
@@ -11,6 +12,6 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.11.15"
+    "mongoose": "^5.11.17"
   }
 }
