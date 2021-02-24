@@ -126,11 +126,13 @@ return `No se pudo leer el modulo. ${message}`;
 
 // Exportamos el metodo que queremos utilizar, en este caso le renombramos a getTimestamp
 module.exports = { getTimestamp: safeGetTimestamp };
+```
 
 Con este archivo podemos leer de manera conveniente los datos proporcionados por el modulo kernel en el archivo /elements/procs/timestamps.
 
 Ahora que tenemos listo esto, podemos proceder a escribir nuestra API, la escribiremos en el archivo ![server.js](../Tutoriales/server-slave/server.js)
 
+```Javascript
 // Requerir DOTENV que carga la configuracion que tenemos en el archivo .env en el directorio principal
 // Aca se pueden definir todas las variables de entorno
 require('dotenv').config(); //npm i dotenv
