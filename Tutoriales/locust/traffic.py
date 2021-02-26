@@ -112,4 +112,12 @@ class MessageTraffic(HttpUser):
             print(">> MessageTraffic: Envio de tráfico finalizado, no hay más datos que enviar.")
             # Parar ejecucion del usuario
             self.stop(True) # Se envía True como parámetro para el valor "force", este fuerza a locust a parar el proceso inmediatamente.
+
+    # Este es una de las tareas que se ejecutara cada vez que pase el tiempo wait_time
+    # Realiza un GET a la dirección del host que especificamos en la página de locust
+    @task
+    def GetMessages(self):      
+        # Realizar una peticion para recibir los datos que hemos guardado
+        self.client.get("/")  
+
         
