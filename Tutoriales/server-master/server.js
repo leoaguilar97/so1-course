@@ -20,15 +20,18 @@ app.post('/', async (req, res) => {
     if (!req.body || !req.body.timestamp) {
         return res.status(400).send({ msg: 'No se enviaron bien los datos' }); // No se hizo una buena peticion, devolvemos 400 BAD REQUEST
     }
-    const { timestamp } = req.body;
+
+    // Obtenemos el timestamp, el nombre y el mensaje.
+    const { timestamp, name, msg } = req.body;
     console.log("Server2: Peticion de creacion de timestamp");
 
     // Deconstruir las propiedades del objeto que nos retorna, en este caso: code, msg y data. (El objeto se ve como: { code: 201, msg: 'Creado!', data: '22:03:01'})
     // Notemos el await porque estamos llamando a un metodo async
-    const { code, msg, data } = await create(timestamp);
+    // Enviamos el timestamp, el nombre y el mensaje
+    const { code, msg: message, data } = await create(timestamp, name, msg);
 
     // Retornar el codigo, y un objeto con el mensaje y datos que creamos
-    return res.status(code).send({ msg, data });
+    return res.status(code).send({ message, data });
 });
 
 // Este metodo HTTP nos servira para obtener todos los datos de la base de datos de mongo

@@ -36,7 +36,7 @@ const createListItem = (timestamp) => htmlListItem.replace('$_li_$', timestamp);
 const getHtml = (innerBody) => htmlPlaceholder.replace('$_body_$', innerBody);
 
 const getTimestampList = (timestamp_list) =>
-    timestamp_list.reduce((prev, curr) => `${prev} ${createListItem(curr.timestamp)}`, "");
+    timestamp_list.reduce((prev, curr) => `${prev} ${createListItem(`${curr.timestamp} - ${curr.name}: ${curr.msg}`)}`, "");
 
 const getHtmlList = (timestamp_array) => getHtml(getTimestampList(timestamp_array));
 

@@ -26,7 +26,9 @@ const TimeStamp = mongoose.model( // Timestamp es el modelo que se utilizara
     'Timestamp',  // Este es el nombre del modelo, saldra en donde visualicemos MongoDB
     // Los datos que se guardaran en la base de datos
     {
-        timestamp: String //Este es el timestamp que queremos guardar
+        timestamp: String, //Este es el timestamp que queremos guardar,
+        name: String, //Este es el nombre de quien envia el mensaje,
+        msg: String //Este es el mensaje
         /*
             Aca vienen todos los demas campos que querramos guardar
         */
@@ -35,9 +37,9 @@ const TimeStamp = mongoose.model( // Timestamp es el modelo que se utilizara
 
 // Crear datos en la base de datos 
 // Notar que la funcion es async porque adentro de ella usamos await
-const create = async (timestamp) => { // El timestamp es el valor que vamos a guardar en la base de datos.
+const create = async (timestamp, name, msg) => { // El timestamp es el valor que vamos a guardar en la base de datos.
 
-    const newTimestamp = new TimeStamp({ timestamp }); // Crear una nueva instancia del modelo, con el dato guardado.
+    const newTimestamp = new TimeStamp({ timestamp, name, msg }); // Crear una nueva instancia del modelo, con el dato guardado.
 
     // Tratar de guardar en la base de datos
     try {

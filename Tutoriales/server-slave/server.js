@@ -21,9 +21,14 @@ app.use(express.json({ extended: true }))
 
 // Con esta ruta haremos una peticion al server 2
 app.post('/', async (req, res) => { // es importante notar que este es un metodo async, ya  que utilizamos await dentro de el
+    // Deconstruimos los valores de name y msg
+    console.log(req.body);
+    const { name, msg } = req.body;
     // Intentamos realizar el post al otro servidor con AXIOS
     try {
-        const { data } = await axios.post(OTHER_API_URL, { timestamp: getTimestamp() }); // realizar una peticion HTTP POST a la otra API
+        // realizar una peticion HTTP POST a la otra API
+        // enviamos el timestamp, un nombre, y un mensaje
+        const { data } = await axios.post(OTHER_API_URL, { timestamp: getTimestamp(), name, msg });
 
         return res.status(201).send(data); //retornar los datos que nos devuelva el servidor
     }
