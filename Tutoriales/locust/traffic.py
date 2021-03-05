@@ -21,11 +21,8 @@ class Reader():
 
     # Constructor de la clase
     def __init__(self):
-        self.file_path = "./traffic.json"
         # En esta variable almacenaremos nuestros datos
         self.array = []
-        # En esta variable almacenaremos los indices que hemos recorrido
-        self.read_index = []
         
     # Obtener un valor random del array
     # NOTA: ESTO QUITA EL VALOR DEL ARRAY.
