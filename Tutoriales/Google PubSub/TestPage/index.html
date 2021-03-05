@@ -7,6 +7,11 @@
       href="http://fonts.cdnfonts.com/css/lemonade-stand"
       rel="stylesheet"
     />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
     <style>
       body {
         background: url(https://i.pinimg.com/originals/47/0a/19/470a19a36904fe200610cc1f41eb00d9.jpg);
@@ -99,8 +104,19 @@
       </form>
 
       <script>
-        document.formulary.submit();
-        document.formulary.reset();
+        $(function () {
+          console.log("Hola!");
+
+          $.ajax({
+            dataType: "json",
+            url: "http://localhost:80/raw",
+            method: "GET",
+            headers: {
+              accept: "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }).done((v) => console.log(v));
+        });
       </script>
     </div>
   </body>

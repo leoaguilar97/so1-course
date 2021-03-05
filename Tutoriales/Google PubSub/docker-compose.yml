@@ -1,0 +1,34 @@
+version: "3.9"
+services:
+  publisher:
+    image: golang:pub
+    ports:
+      - "5001:5001"
+    networks:
+      - tuiter
+
+  subscriber:
+    build: ./Subscriber
+    depends_on:
+      - publisher
+    restart: always
+    networks:
+      - tuiter
+
+  master:
+    image: node:master
+    ports:
+      - "4001:4001"
+    networks:
+      - tuiter
+
+  slave:
+    image: node:slave
+    ports:
+      - "80:4000"
+    networks:
+      - tuiter
+
+networks:
+  tuiter:
+    driver: "bridge"

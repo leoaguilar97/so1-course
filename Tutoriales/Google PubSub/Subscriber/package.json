@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@google-cloud/pubsub": "^2.10.0"
+    "@google-cloud/pubsub": "^2.10.0",
+    "axios": "^0.21.1"
   },
   "devDependencies": {},
   "scripts": {

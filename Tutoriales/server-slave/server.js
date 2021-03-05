@@ -16,6 +16,13 @@ const OTHER_API_URL = process.env.API_URL; // Leer la URL de la api del archivo 
 
 const app = new express(); // Crear una base de datos express
 
+// Habilitamos los CORS
+app.all('/', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
 // IMPORTANTE! Le decimos a express que necesitamos trabajar con intercambio de datos JSON
 app.use(express.json({ extended: true }))
 
@@ -58,8 +65,23 @@ app.get('/', async (req, res) => { // es importante notar que este es un metodo 
     }
 });
 
+app.get('/raw', async (req, res) => {
+    console.log("Server1: Peticion de lista completa");
+
+    try {
+        const result = await axios.get(OTHER_API_URL); // realizamos una peticion GET a la otra API
+        console.log("Server1: La peticion al server 2 fue exitosa");
+        const data = result.data;
+        return res.json(data); // Devolvemos el HTML para que sea renderizado por el navegador
+    }
+    catch (error) {
+        console.log(`Server1: Error en la peticion, error: ${error.message}`);
+        return res.status(500).send({ msg: error.message }); // Existio un error, devuelve el mensaje del error
+    }
+});
+
 // Si existe un puerto en la configuracion, la cargamos; de lo contrario se inicia en el puerto 4000
 const PORT = process.env.port || 4000;
 
 // Iniciar la API en el puerto que definimos, mostrar en consola que ya esta funcionando.
-app.listen(PORT, () => { console.log(`API lista en -> http://localhost:${PORT}`) }); 
+app.listen(PORT, () => { console.log(`API lista en -> http://localhost:${PORT}`) });
