@@ -25,7 +25,7 @@ const messageReader = message => {
     console.log(`${message.id} - ${message.data}`);
     console.table(message.attributes);
 
-    messages.push(message);
+    messages.push({ msg: String(message.data), id: message.id, ...message.attributes });
 
     // Con esto marcamos el acknowledgement de que recibimos el mensaje
     // Si no marcamos esto, los mensajes se nos seguirán enviando aunque ya los hayamos leído!
@@ -39,18 +39,23 @@ const notificationListener = () => {
     // Pasamos el nombre de nuestro subscriptor (que encontramos en Google Cloud)
     const sub = client.subscription(SUB_NAME);
 
-    // Guardar la cantidad de mensajes que fueron enviados
-    const previous_count = messages.length;
-
-    // 
-
     // Conectar el evento "message" al lector de mensajes
     sub.on('message', messageReader);
 
     setTimeout(() => {
-        subscription.removeListener('message', messageHandler);
-        console.log(`Se recibieron ${messageCount} mensajes.`);
+        sub.removeListener('message', messageReader);
+
+        if (messages.length > 0) {
+            console.log(`${messages.length} mensajes recibidos: `);
+            console.log("---------");
+            console.table(messages);
+        }
+        else {
+            console.log("No hubo ningún mensaje en este tiempo. :(")
+        }
+
     }, TIMEOUT * 1000);
 };
 
+// Empezar a escuchar los mensajes
 notificationListener();
