@@ -102,4 +102,5 @@ dist
 
 # TernJS port file
 .tern-port
-Tutoriales/Google PubSub/key.json
+Tutoriales/Google PubSub/Publisher/key.json
+Tutoriales/Google PubSub/Subscriber/key.json
