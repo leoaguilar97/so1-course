@@ -38,7 +38,7 @@ const messageReader = async message => {
     try {
         console.log(`Agregando mensaje al servidor...`);
         const jsonMessage = JSON.parse(message.data) || {};
-        const request_body = { name: jsonMessage.Name || "Anonimo", msg: jsonMessage.Msg || "Empty" };
+        const request_body = { name: jsonMessage.Name || jsonMessage.name || "Anonimo", msg: jsonMessage.Msg || jsonMessage.msg || "Empty" };
         await axios.post(process.env.API_URL, request_body);
     }
     catch (e) {
