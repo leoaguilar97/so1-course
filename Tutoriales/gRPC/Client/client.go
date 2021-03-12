@@ -66,6 +66,7 @@ func sendMessage(first_name string, message string) {
 
 // Creamos un server sencillo que unicamente acepte peticiones GET y POST a '/'
 func http_server(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(">> CLIENT: Manejando peticion HTTP")
 	// Comprobamos que el path sea exactamente '/' sin parámetros
 	if r.URL.Path != "/" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
@@ -76,11 +77,13 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	// Devolver una página sencilla con una forma html para enviar un mensaje
 	case "GET":
+		fmt.Println(">> CLIENT: Devolviendo form.html")
 		// Leer y devolver el archivo form.html contenido en la carpeta del proyecto
 		http.ServeFile(w, r, "form.html")
 
 	// Publicar un mensaje a Google PubSub
 	case "POST":
+		fmt.Println(">> CLIENT: Iniciando envio de mensajes")
 		// Si existe un error con la forma enviada entonces no seguir
 		if err := r.ParseForm(); err != nil {
 			fmt.Fprintf(w, "ParseForm() err: %v", err)
@@ -110,13 +113,15 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 // Funcion principal
 func main() {
 
-	port := os.Getenv("PORT")
+	client_host := os.Getenv("CLIENT_HOST")
+
+	fmt.Println(">> CLIENT: Iniciando servidor http en ", client_host)
 
 	// Asignar la funcion que controlara las llamadas http
 	http.HandleFunc("/", http_server)
 
 	// Levantar el server, si existe un error levantandolo hay que apagarlo
-	if err := http.ListenAndServe(port, nil); err != nil {
+	if err := http.ListenAndServe(client_host, nil); err != nil {
 		log.Fatal(err)
 	}
 }
