@@ -5,15 +5,19 @@ services:
     ports:
       - "50051:50051"
     networks:
-      - grpctuiter
+      - grpctuiter2
 
   grpcclient:
     build: ./Client
     ports:
-      - "5000:5000"
+      - "5002:5000"
+    environment:
+      - CLIENT_HOST=:5000
+      - SERVER_HOST=grpcserver:50051
+      - NAME=instancia2
     networks:
-      - grpctuiter
+      - grpctuiter2
 
 networks:
-  grpctuiter:
+  grpctuiter2:
     driver: "bridge"

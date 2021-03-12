@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  grpcserver:
+    build: ./Server
+    ports:
+      - "50052:50051"
+    networks:
+      - grpctuiter
+
+  grpcclient:
+    build: ./Client
+    environment:
+      - CLIENT_HOST=:5000
+      - SERVER_HOST=grpcserver:50051
+      - NAME=instancia1
+    ports:
+      - "5001:5000"
+    networks:
+      - grpctuiter
+
+networks:
+  grpctuiter:
+    driver: "bridge"

@@ -58,7 +58,7 @@ func sendMessage(first_name string, message string) {
 	// Iniciar un greet, en background con la peticion que estamos realizando
 	res, err := c.Greet(context.Background(), req)
 	if err != nil {
-		log.Fatalf(">> CLIEN: Error realizando la peticion %v", err)
+		log.Fatalf(">> CLIENT: Error realizando la peticion %v", err)
 	}
 
 	fmt.Println(">> CLIENT: El servidor nos respondio con el siguiente mensaje: ", res.Result)
@@ -66,7 +66,8 @@ func sendMessage(first_name string, message string) {
 
 // Creamos un server sencillo que unicamente acepte peticiones GET y POST a '/'
 func http_server(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(">> CLIENT: Manejando peticion HTTP")
+	instance_name := os.Getenv("NAME")
+	fmt.Println(">> CLIENT: Manejando peticion HTTP CLIENTE: ", instance_name)
 	// Comprobamos que el path sea exactamente '/' sin parámetros
 	if r.URL.Path != "/" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
@@ -93,7 +94,7 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 		// Obtener el nombre enviado desde la forma
 		name := r.FormValue("name")
 		// Obtener el mensaje enviado desde la forma
-		msg := r.FormValue("msg")
+		msg := r.FormValue("msg") + "desde " + instance_name
 
 		// Publicar el mensaje, convertimos el objeto JSON a String
 		sendMessage(name, msg)
@@ -112,8 +113,10 @@ func http_server(w http.ResponseWriter, r *http.Request) {
 
 // Funcion principal
 func main() {
-
+	instance_name := os.Getenv("NAME")
 	client_host := os.Getenv("CLIENT_HOST")
+
+	fmt.Println(">> -------- CLIENTE ", instance_name, " --------")
 
 	fmt.Println(">> CLIENT: Iniciando servidor http en ", client_host)
 
