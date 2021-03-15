@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Ejemplo Sistemas Operativos 1</title>
+    <link
+      href="http://fonts.cdnfonts.com/css/lemonade-stand"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: url(https://i.pinimg.com/originals/47/0a/19/470a19a36904fe200610cc1f41eb00d9.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        font-family: "Lemonade Stand", sans-serif;
+      }
+      h1 {
+        font-family: "Lemonade Stand", sans-serif;
+        font-size: 150px;
+        color: white;
+        font-weight: bold;
+        margin-left: 5%;
+      }
+    </style>
+  </head>
+  <body class="">
+    <style>
+      .ui-input-text {
+        border: none !important;
+        border-color: transparent !important;
+        background-color: rgba(0, 0, 0, 0);
+        width: 100%;
+        margin: 10px 0px 10px 0px;
+        height: 50px;
+        max-width: 100%;
+        min-width: 100%;
+        font-family: "Lemonade Stand", sans-serif;
+        font-size: 35px;
+        color: white;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus,
+      button:focus {
+        outline: none;
+      }
+      .transparenty {
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 50px 100px 50px 100px;
+        margin: 100px 100px 100px 100px;
+      }
+      .myButton {
+        box-shadow: inset 0px 1px 0px 0px #54a3f7;
+        background: linear-gradient(to bottom, #007dc1 5%, #0061a7 100%);
+        background-color: #007dc1;
+        border-radius: 3px;
+        border: 1px solid #124d77;
+        float: right;
+        cursor: pointer;
+        color: #ffffff;
+        font-family: Arial;
+        font-size: 13px;
+        padding: 6px 24px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #154682;
+      }
+      .myButton:hover {
+        background: linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+        background-color: #0061a7;
+      }
+      .myButton:active {
+        position: relative;
+        top: 1px;
+      }
+    </style>
+    <h1>TUITER :)</h1>
+    <div class="transparenty">
+      <form method="POST" action="/" name="formulary" target="_blank">
+        <input
+          name="name"
+          class="ui-input-text"
+          type="text"
+          value=""
+          required
+          placeholder="Whats your name?"
+        />
+        <textarea
+          name="msg"
+          class="ui-input-text"
+          type="text"
+          value=""
+          required
+          multiple
+          placeholder="Tell anything to the world..."
+          style="min-height: 100px"
+        ></textarea>
+        <input type="submit" class="myButton" value="SEND" />
+      </form>
+
+      <script>
+        document.formulary.submit();
+        document.formulary.reset();
+      </script>
+    </div>
+  </body>
+</html>
