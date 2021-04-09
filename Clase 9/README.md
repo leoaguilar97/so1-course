@@ -19,7 +19,7 @@ En las versiones anteriores de Linux se utilizaba una planificación por priorid
 
 El algoritmo para los nuevos sistemas operativos Linux es mucho más sofisticado, escala muy bien con el número de procesos ejecutables, el O(n) del algoritmo es constante. Cada proceso de linux es planificado utilizando una mezcla de First Come First Serve y Round Robin.
 
-## Preemtion
+## Preemption
 
 El término "preemption" (traducido a español, significa "con derecho preferente"). Este acto básicamente es interrumpir un proceso en ejecución y dejarlo en "espera" para volver a ejecutarlo en otro momento.
 
