@@ -50,7 +50,7 @@ class Churrascon {
     // Al inicio del churrasco, teníamos 0 pedazos cocinados.
     int pedazos_que_quedan = 0;
 
-    int azar (){
+    int asar (){
         int id_del_pedazo = churrasquera.ponerUnPedazo(new PedazoDeCarnita());
         pedazos_que_quedan = pedazos_que_quedan + 1;
 
@@ -74,7 +74,7 @@ class Churrascon {
         Thread cocinar_pedazos = new Thread(){
             @Override
             void Run(){
-                int id_del_pedazo = churrascon.azar();
+                int id_del_pedazo = churrascon.asar();
                 // me tardo 8 minutos por lado
                 Thread.sleep(480000);
                 churrascon.voltear(id_del_pedazo);
