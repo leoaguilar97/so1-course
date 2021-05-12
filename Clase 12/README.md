@@ -1,5 +1,7 @@
 # KAFKA
 
+## ¿De dónde sale Kafka?
+
 Imaginémonos un sistema informático para una empresa que está en pleno crecimiento. Quizá en este momento lo más importante es realizar las funcionalidades básicas que necesita ejecutar la empresa. Pensemos en una empresa que desarrolla juegos, por ejemplo. Al inicio esta empresa estará interesada en sacar las funcionalidades básicas del juego: el juego como tal y un sistema de texturas que permitirá agregarle diferentes funcionalidades posteriormente.
 
 Mediante pasa el tiempo, el juego decide agregegar un sistema anti-cheating debido a la cantidad grande de denuncias de este tipo que están teniendo en los foros de sus comunidades. Además, implementarán un sistema de envío de correos para mantener a sus jugadores informados de sus siguientes actualizaciones.
@@ -133,11 +135,15 @@ Abrimos el archivo config/zookeeper.properties en un editor de texto y cambiamos
 
 En este caso, yo lo tengo de esta manere:
 
+```bash
 dataUrl=C:/kafka_2.13-2.8.0/data/zookeeper
+```
 
 Ahora ejecutar el comando:
 
+```bash
 $ kafka-zookeeper-start config/zookeeper.properties
+```
 
 ## Iniciar el server
 
@@ -145,11 +151,15 @@ Abrimos el archivo config/server.properties en un editor de texto y cambiamos la
 
 En este caso, yo lo tengo de esta manere:
 
+```bash
 log.dirs=C:/kafka_2.13-2.8.0/data/kafka
+```
 
 Ahora ejecutar el comando:
 
-kafka-server-start config/server.properties
+```bash
+$ kafka-server-start config/server.properties
+```
 
 # Kafka CLI
 
@@ -157,15 +167,21 @@ Para crear un tópico necesitamos definir dónde está nuestro zookeeper, el nom
 
 Yo tengo mi zookeeper corriendo en el puerto 2300 de mi localhost, mi tópico se llamará _topic1_, le daré 3 particiones y únicamente tengo un broker, por lo cual el factor de replicación será **1**.
 
+```bash
 $ kafka-topics --zookeeper 127.0.0.1:2300 --topic topic1 --create --partitions 3 --replication-factor 1
+```
 
 Ahora veamos que fue lo que creo
 
+```bash
 $ kafka-topics --zookeeper 127.0.0.1:2300 --list
+```
 
 Vemos que esto nos devuelve el nombre "topic1". Veamos la información que tiene adentro el tópico 1.
 
+```bash
 $ kafka-topics --zookeeper 127.0.0.1:2300 --topic topic1 --describe
+```
 
 El cero significa que el lider es el broker 0, o sea el servidor donde estoy ejecutándo actualmente.
 
@@ -173,31 +189,43 @@ El cero significa que el lider es el broker 0, o sea el servidor donde estoy eje
 
 Necesitamos un productor para enviar mensajes, para ello utilizaremos el programa de CLI que trae Kafka por defecto.
 
+```bash
 $ kafka-console-producer
+```
 
 Especificamos a la lista de brokers a la queremos conectarnos y el tópico al que vamos a publicar los mensajes.
 
+```bash
 $ kafka-console-producer --broker-list 127.0.0.1:9092 --topic topic1
+```
 
 Tambien podemos utilizar los acknowledgments
 
+```bash
 $ kafka-console-producer --broker-list 127.0.0.1:9092 --topic topic1 --producer-property acks=all
+```
 
 ### Podemos crear nuevos topicos en ejecucion
 
 No es necesario crear tópicos y luego utilizarlos, los tópicos pueden crearse sobre la marcha:
 
+```bash
 $ kafka-console-producer --broker-list 127.0.0.1:9092 --topic new_topic
+```
 
 Esto produce la siguiente salida
 
+```bash
 > Hola
 > WARNING! Pero el producer puede recuperarse de errores
 > otro mensaje!
+```
 
 veamos el nuevo topico
 
-kafka-topics --zookeeper 127.0.0.1:2300 --topic new_topic --describe
+```bash
+$ kafka-topics --zookeeper 127.0.0.1:2300 --topic new_topic --describe
+```
 
 Los defaults son 1 en replication y en partitions, usualmente no es buena idea tener una particion unica y sin replicacion.
 
@@ -205,10 +233,14 @@ Los defaults son 1 en replication y en partitions, usualmente no es buena idea t
 
 Para revisar que la información fue enviada de la manera correcta, podemos utilizar los siguientes comandos:
 
+```bash
 $ kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic topic1
+```
 
 Esto no leerá nada, ya que los consumidores por defecto no leen todos los mensajes que han sido publicados antes.
 
 Para leer todos podemos utilizar la siguiente opción:
 
+```bash
 $ kafka-console-consumer --bootstrap-server 127.0.0.1:9092 --topic topic1 --from-beginning
+```
