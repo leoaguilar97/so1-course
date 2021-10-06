@@ -73,6 +73,95 @@ Esta noticia ha preocupado a multiples desarrolladores acerca de las implicacion
 
 ## Utilizando Containerd
 
+```sh
+# Instalar wget
+
+$ sudo apt install wget
+
+$ sudo apt update
+
+# crear un nuevo directorio para containerd
+$ mkdir containerd && cd $_
+
+# instalar el paquete
+$ wget https://github.com/containerd/containerd/releases/download/v1.5.4/containerd-1.5.4-linux-amd64.tar.gz
+
+# esto nos descarga lo siguiente
+$ ls -l
+
+# descomprimir el tar utilizando xvf, x de extract, v de verbose y f de file
+$ tar xvf containerd-1.5.4-linux-amd64.tar.gz
+
+# Ahora veamos que tiene adentro el directorio que descargamos
+$ cd bin && ls -l
+
+# Ahora movemos CTR a un lugar donde podamos utilizarlo sin recordar la ruta donde estamos
+
+$ sudo mv ctr /usr/bin
+
+# utilizando ctr
+
+$ ctr
+
+# en este podemos ver la documentacion de la herramienta
+
+# ahora veamos la lista de imagenes que tenemos a disposicion
+$ sudo ctr image list
+
+# nos damos cuenta que no funciona, ¿por qué?
+
+# es necesario que containerd esté ejecutándose como un proceso para poder utilizar CTR, como había dicho CTR unicamente es el cliente para utilizar y administrar containerd sin utilizar Go
+$ cd ~/containerd/bin && sudo ./containerd
+
+# ahora hagamos un pull
+
+$ sudo ctr i pull docker.io/library/redis:latest
+
+$ sudo ctr i list
+
+$ sudo ctr run -h
+
+$ sudo ctr run --rm docker.io/library/redis:latest
+
+$ sudo ctr run --rm docker.io/library/redis:latest redis
+
+# Esto nos falla porque aun no tenemos runc instalado, recordemos que containerd utiliza runc para toda la parte que vimos del soporte de imagenes OCI y otras funcionalidades avanzadas.
+$ sudo apt-get install runc
+
+# ahora volvemos a tratar de correr nuestro container
+$ sudo ctr run --rm docker.io/library/redis:latest redis
+
+# ahora veamos de conectarnos, yo ya tengo instalado el redis y redis-cli
+$ redis-cli ping
+
+# no se puede porque todavia no estan abiertas las conexiones
+$ sudo ctr run --rm --tty --net-host docker.io/library/redis:latest redis
+
+# ahora si podemos intentar conectarnos
+$ redis-cli ping
+
+# ya estamos listos para conectarnos desde afuera de la máquina virtual
+
+
+# ahora veamos si necesitamos que nuestra instancia se ejecute en segundo plano
+$ sudo ctr run --detach --tty --net-host docker.io/library/redis:latest redis
+
+# ahora estamos ejecutando redis en segundo plano
+$ sudo ctr task list
+
+# ahora para finalizarlo podemos utilizar el comando delete
+$ sudo ctr task kill redis
+
+# si intentamos conectarnos no nos dejará
+$ redis-cli ping
+```
+
+# ¿Qué es un SHIM?
+
+Shim es una librería que intercepta llamadas a una API y cambia los argumentos que fueron pasados por esta llamada, también puede manejar la petición ella misma o redireccionar la operación a otro lugar.
+
+En docker un shim es un demonio muy ligero que contiene acciones que controlan los procesos que se realizan en un contenedor y que permiten ejecutar runc.
+
 # Referencias
 
 https://www.cloudsavvyit.com/10075/what-is-containerd-and-how-does-it-relate-to-docker-and-kubernetes/
