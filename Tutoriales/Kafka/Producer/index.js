@@ -16,7 +16,7 @@ const producer = kafka.producer()
 // Esta funcion nos devuelve los datos de una persona
 const crearPersona = () => ({
     genero: faker.music.genre(),
-    nombre: faker.name()
+    nombre: faker.name.firstName()
 });
 
 // Funcion para enviar un mensaje
@@ -32,9 +32,9 @@ const enviarMensaje = async () => {
 
     // Enviamos la información al tópico "topic1"
     await producer.send({
-        topic: process.env.TOPIC || 'topic1',
+        topic: process.env.TOPIC || 'sopes1',
         // acá mandamos una lista de mensajes, en este caso únicamente enviaremos uno
-        messages: [{ value: `json:${nueva_persona}` }]
+        messages: [{ value: `json:${JSON.stringify(nueva_persona)}` }]
     })
 
     console.log('Datos enviados exitosamente...');

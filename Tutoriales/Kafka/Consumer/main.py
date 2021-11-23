@@ -11,8 +11,10 @@ from prettytable import PrettyTable
 # Json para parsear la información
 import json
 
+print("Conectandose")
+
 # Definimos un nuevo consumidor al tópico "topic1"
-consumer = KafkaConsumer('topic1')
+consumer = KafkaConsumer('sopes1')
 
 # Tabla con los datos a mostrar
 table = PrettyTable()
@@ -22,7 +24,7 @@ title = table.field_names = ["nombre", "genero"]
 for msg in consumer:
     # obtenemos el valor del mensaje
     value = msg.value.decode('utf-8')
-    print(f"> Recibido: {value}")
+    #print(f"> Recibido: {value}")
     
     # Si contiene el string "json:" al inicio, lo convertiremos a json
     if "json:" in value:

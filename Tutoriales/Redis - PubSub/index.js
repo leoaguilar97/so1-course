@@ -20,10 +20,11 @@ app.use(express.json({ extended: true }))
 // Conectarse con redis, para este ejemplo se especifican todos los campos
 // el valor actual de estos campos es el que trae por defecto el cliente de redis
 const client = redis.createClient({
-    host: 'localhost',
+    host: '34.125.51.125',
     port: 6379,
     auth_pass: ""
 });
+
 // Para conectarse con los valores por defecto no hace falta enviar este objeto
 // Por lo tanto podríamos haberlo hecho así:
 

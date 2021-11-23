@@ -142,7 +142,7 @@ dataUrl=C:/kafka_2.13-2.8.0/data/zookeeper
 Ahora ejecutar el comando:
 
 ```bash
-$ kafka-zookeeper-start config/zookeeper.properties
+$ .\zookeeper-server-start.bat ../../config/zookeeper.properties
 ```
 
 ## Iniciar el server

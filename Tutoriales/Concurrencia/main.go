@@ -20,7 +20,7 @@ func Sumar(numeros []int) int64 {
 
 func SumarConcurrente(numeros []int) int64 {
 
-	cores := runtime.NumCPU() // yo tengo 12 nucleos
+	cores := 5 //runtime.NumCPU() // yo tengo 12 nucleos
 	runtime.GOMAXPROCS(4)
 
 	var sum int64
@@ -63,9 +63,9 @@ func llamarHilos() {
 }
 
 func main() {
-	numeros := rand.Perm(1e10) //12000000
+	numeros := rand.Perm(1e8) //100000
 
-	//fmt.Printf("Sumando: %v\n", numeros)
+	fmt.Printf("Sumando: %v\n", numeros)
 
 	t := time.Now()
 	sum := Sumar(numeros)
